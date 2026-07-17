@@ -5,6 +5,6 @@ export const currentUser = {
 
   business: {
     name: "unique salons",
-    type: "service", // retail | service
+    type: "retail", // retail | service
   },
 };

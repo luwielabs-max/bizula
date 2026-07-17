@@ -19,6 +19,7 @@ import Sales from "../pages/Dashboard/Sales";
 import Customers from "../pages/Dashboard/Customers";
 import Payments from "../pages/Dashboard/Payments";
 import Settings from "../pages/Dashboard/Settings";
+import BookingPage from "../pages/Public/BookingPage";
 
 export default function AppRoutes() {
   return (
@@ -60,6 +61,7 @@ export default function AppRoutes() {
 
         </Route>
 
+    <Route path="/b/:slug" element={<BookingPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -1,0 +1,271 @@
+Folder PATH listing
+Volume serial number is 7A90-B82E
+C:.
+³   App.css
+³   App.jsx
+³   index.css
+³   main.jsx
+³   structure.txt
+³   
+ÃÄÄÄassets
+³       hero.png
+³       react.svg
+³       vite.svg
+³       
+ÃÄÄÄcomponents
+³   ÃÄÄÄauth
+³   ³   ³   AuthLayout.jsx
+³   ³   ³   BusinessTypeCard.jsx
+³   ³   ³   OAuthButton.jsx
+³   ³   ³   
+³   ³   ÃÄÄÄcards
+³   ³   ³       BusinessTypeCard.jsx
+³   ³   ³       
+³   ³   ÃÄÄÄforms
+³   ³   ³       ForgotPasswordForm.jsx
+³   ³   ³       LoginForm.jsx
+³   ³   ³       RegisterStepOne.jsx
+³   ³   ³       RegisterStepThree.jsx
+³   ³   ³       RegisterStepTwo.jsx
+³   ³   ³       
+³   ³   ÃÄÄÄlayout
+³   ³   ÀÄÄÄshared
+³   ³           AuthDivider.jsx
+³   ³           AuthFooter.jsx
+³   ³           AuthHeader.jsx
+³   ³           SocialLogin.jsx
+³   ³           StepIndicator.jsx
+³   ³           
+³   ÃÄÄÄbookings
+³   ³       BookingDetailsDrawer.jsx
+³   ³       BookingDrawer.jsx
+³   ³       BookingFilters.jsx
+³   ³       BookingHeader.jsx
+³   ³       BookingLinkDrawer.jsx
+³   ³       BookingRow.jsx
+³   ³       BookingStats.jsx
+³   ³       BookingStatusBadge.jsx
+³   ³       BookingTable.jsx
+³   ³       CreateBookingDrawer.jsx
+³   ³       EmptyBookings.jsx
+³   ³       
+³   ÃÄÄÄdashboard
+³   ³       DashboardHeader.jsx
+³   ³       EmptyState.jsx
+³   ³       QuickActionCard.jsx
+³   ³       QuickActions.jsx
+³   ³       StatCard.jsx
+³   ³       WidgetCard.jsx
+³   ³       
+³   ÀÄÄÄlanding
+³       ³   Home.jsx
+³       ³   
+³       ÃÄÄÄbusiness
+³       ³       HybridDashboard.jsx
+³       ³       RetailDashboard.jsx
+³       ³       ServicesDashboard.jsx
+³       ³       
+³       ÃÄÄÄdata
+³       ³       businessTypes.js
+³       ³       
+³       ÃÄÄÄfeatures
+³       ³       BusinessEverywherePreview.jsx
+³       ³       DashboardPreview.jsx
+³       ³       PricingPreview.jsx
+³       ³       
+³       ÀÄÄÄsections
+³               BusinessEverywhere.jsx
+³               BusinessTypes.jsx
+³               CTA.jsx
+³               DashboardShowcase.jsx
+³               FAQ.jsx
+³               Features.jsx
+³               FeatureShowcase.jsx
+³               Footer.jsx
+³               FreeUntilYouGrow.jsx
+³               Hero.jsx
+³               HowItWorks.jsx
+³               Navbar.jsx
+³               Pricing.jsx
+³               SocialProof.jsx
+³               
+ÃÄÄÄcontext
+³       AuthContext.jsx
+³       
+ÃÄÄÄdashboard
+³   ÃÄÄÄconfigs
+³   ³   ³   retailDashboard.js
+³   ³   ³   serviceDashboard.js
+³   ³   ³   
+³   ³   ÀÄÄÄquickActions
+³   ³           retail.js
+³   ³           service.js
+³   ³           
+³   ÃÄÄÄhelpers
+³   ÀÄÄÄwidgets
+³       ÃÄÄÄcommon
+³       ³       CustomersWidget.jsx
+³       ³       RevenueWidget.jsx
+³       ³       
+³       ÃÄÄÄretail
+³       ³       InventoryWidget.jsx
+³       ³       LowStockWidget.jsx
+³       ³       OrdersWidget.jsx
+³       ³       RecentActivityWidget.jsx
+³       ³       SalesWidget.jsx
+³       ³       
+³       ÀÄÄÄservice
+³               BookingsWidget.jsx
+³               CalendarWidget.jsx
+³               OutstandingPaymentsWidget.jsx
+³               RecentActivityWidget.jsx
+³               ServicesWidget.jsx
+³               
+ÃÄÄÄdata
+³   ³   bookings.js
+³   ³   
+³   ÀÄÄÄauth
+³           businessTypes.js
+³           
+ÃÄÄÄfirebase
+³       config.js
+³       
+ÃÄÄÄhooks
+³       useAuth.js
+³       
+ÃÄÄÄlayouts
+³       DashboardLayout.jsx
+³       sidebarItems.js
+³       
+ÃÄÄÄlib
+³       luwie-ui.js
+³       
+ÃÄÄÄluwie-ui
+³   ³   .gitignore
+³   ³   eslint.config.js
+³   ³   index.html
+³   ³   package-lock.json
+³   ³   package.json
+³   ³   postcss.config.js
+³   ³   README.md
+³   ³   tailwind.config.js
+³   ³   vite.config.js
+³   ³   
+³   ÃÄÄÄpublic
+³   ³       favicon.svg
+³   ³       icons.svg
+³   ³       
+³   ÀÄÄÄsrc
+³       ³   App.css
+³       ³   App.jsx
+³       ³   index.css
+³       ³   index.js
+³       ³   main.jsx
+³       ³   
+³       ÃÄÄÄassets
+³       ³       hero.png
+³       ³       react.svg
+³       ³       vite.svg
+³       ³       
+³       ÃÄÄÄcomponents
+³       ³   ÃÄÄÄdocs
+³       ³   ³       CodeBlock.jsx
+³       ³   ³       DocsLayout.jsx
+³       ³   ³       DocsNavbar.jsx
+³       ³   ³       DocsSection.jsx
+³       ³   ³       
+³       ³   ÀÄÄÄshowcase
+³       ³           ComponentShowcase.jsx
+³       ³           FloatingComponents.jsx
+³       ³           GridBackground.jsx
+³       ³           Hero.jsx
+³       ³           InstallSection.jsx
+³       ³           LandingNavbar.jsx
+³       ³           ShowcaseLayout.jsx
+³       ³           WhyLuwie.jsx
+³       ³           
+³       ÃÄÄÄlib
+³       ³   ³   motion.js
+³       ³   ³   
+³       ³   ÀÄÄÄui
+³       ³           LAvatar.jsx
+³       ³           LBadge.jsx
+³       ³           LButton.jsx
+³       ³           LCard.jsx
+³       ³           LContainer.jsx
+³       ³           LDivider.jsx
+³       ³           LDock.jsx
+³       ³           LDockItem.jsx
+³       ³           LInput.jsx
+³       ³           LNavbar.jsx
+³       ³           LSidebar.jsx
+³       ³           LSidebarItem.jsx
+³       ³           LStack.jsx
+³       ³           LStatCard.jsx
+³       ³           LTextarea.jsx
+³       ³           
+³       ÀÄÄÄpages
+³               Buttons.jsx
+³               Cards.jsx
+³               Dashboard.jsx
+³               Forms.jsx
+³               Home.jsx
+³               Navigation.jsx
+³               
+ÃÄÄÄmodules
+³   ÃÄÄÄbookings
+³   ÃÄÄÄcustomers
+³   ÃÄÄÄinventory
+³   ÃÄÄÄpayments
+³   ÃÄÄÄsales
+³   ÀÄÄÄservices
+ÃÄÄÄpages
+³   ÃÄÄÄAuth
+³   ³       BusinessSetup.jsx
+³   ³       EmailSent.jsx
+³   ³       ForgotPassword.jsx
+³   ³       Login.jsx
+³   ³       Register.jsx
+³   ³       Success.jsx
+³   ³       VerifyEmail.jsx
+³   ³       
+³   ÃÄÄÄDashboard
+³   ³       Bookings.jsx
+³   ³       Customers.jsx
+³   ³       Dashboard.jsx
+³   ³       Inventory.jsx
+³   ³       Payments.jsx
+³   ³       Sales.jsx
+³   ³       Services.jsx
+³   ³       Settings.jsx
+³   ³       
+³   ÀÄÄÄPublic
+³           BookingPage.jsx
+³           
+ÃÄÄÄroutes
+³       AppRoutes.jsx
+³       AuthRoutes.jsx
+³       
+ÃÄÄÄservices
+³   ³   auth.js
+³   ³   
+³   ÀÄÄÄauth
+³           authService.js
+³           
+ÃÄÄÄsidebar
+³       common.js
+³       index.js
+³       retail.js
+³       service.js
+³       
+ÃÄÄÄsrc
+³   ÀÄÄÄcomponents
+³       ÀÄÄÄauth
+³           ÀÄÄÄsteps
+³                   RegisterSteps.jsx
+³                   
+ÀÄÄÄutils
+    ÀÄÄÄvalidation
+            passwordStrength.js
+            registerValidation.js
+            

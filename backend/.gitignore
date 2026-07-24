@@ -16,4 +16,4 @@ Thumbs.db
 
 #Firebase service account
 serviceAccountKey.json
-firebase-adminsdk*.json
+bizula-firebase-adminsdk-fbsvc-*.json

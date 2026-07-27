@@ -20,6 +20,7 @@ import Customers from "../pages/Dashboard/Customers";
 import Payments from "../pages/Dashboard/Payments";
 import Settings from "../pages/Dashboard/Settings";
 import BookingPage from "../pages/Public/BookingPage";
+import Orders from "../pages/Dashboard/Orders";
 
 export default function AppRoutes() {
   return (
@@ -52,6 +53,8 @@ export default function AppRoutes() {
           <Route path="inventory" element={<Inventory />} />
 
           <Route path="sales" element={<Sales />} />
+
+          <Route path="orders" element={<Orders />} />
 
           <Route path="customers" element={<Customers />} />
 

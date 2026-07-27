@@ -2,7 +2,7 @@ import { Search, CalendarDays, Filter } from "lucide-react";
 
 export default function BookingFilters() {
   return (
-    <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <div className="flex flex-col gap-4 rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm sm:p-5 lg:flex-row lg:items-center lg:justify-between">
 
       {/* Search */}
 

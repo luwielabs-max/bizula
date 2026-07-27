@@ -78,6 +78,7 @@ export default function Inventory() {
       <InventoryStats products={filteredProducts} />
 
       <InventoryFilters
+      products={products}
       search={search}
       setSearch={setSearch}
       category={category}
@@ -87,7 +88,7 @@ export default function Inventory() {
     />
 
       <InventoryTable
-        products={products}
+        products={filteredProducts}
         onSelect={setSelectedProduct}
       />
 

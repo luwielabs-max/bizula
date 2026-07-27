@@ -82,31 +82,55 @@ export function deleteProduct(id) {
 export function deductStock(id, quantity) {
   const product = getProductById(id);
 
-  if (!product) return;
-
-  product.stock -= quantity;
-
-  if (product.stock < 0) {
-    product.stock = 0;
+  if (!product) {
+    throw new Error("Product not found.");
   }
 
+  if (!Number.isInteger(quantity) || quantity <= 0) {
+    throw new Error("Quantity must be a positive integer.");
+  }
+
+  const available = getAvailableStock(id);
+
+  if (available < quantity) {
+    throw new Error("Insufficient stock.");
+  }
+
+  product.stock -= quantity;
   product.status = calculateStatus(product);
 }
 
 export function increaseStock(id, quantity) {
   const product = getProductById(id);
 
-  if (!product) return;
+  if (!product) {
+    throw new Error("Product not found.");
+  }
+
+  if (!Number.isInteger(quantity) || quantity <= 0) {
+    throw new Error("Quantity must be a positive integer.");
+  }
 
   product.stock += quantity;
-
   product.status = calculateStatus(product);
 }
 
 export function reserveStock(id, quantity) {
   const product = getProductById(id);
 
-  if (!product) return;
+  if (!product) {
+    throw new Error("Product not found.");
+  }
+
+  if (!Number.isInteger(quantity) || quantity <= 0) {
+    throw new Error("Quantity must be a positive integer.");
+  }
+
+  const available = getAvailableStock(id);
+
+  if (available < quantity) {
+    throw new Error("Insufficient stock.");
+  }
 
   product.reservedStock += quantity;
 }
@@ -114,7 +138,13 @@ export function reserveStock(id, quantity) {
 export function releaseReservedStock(id, quantity) {
   const product = getProductById(id);
 
-  if (!product) return;
+  if (!product) {
+    throw new Error("Product not found.");
+  }
+
+  if (!Number.isInteger(quantity) || quantity <= 0) {
+    throw new Error("Quantity must be a positive integer.");
+  }
 
   product.reservedStock -= quantity;
 

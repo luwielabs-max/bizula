@@ -10,27 +10,27 @@ export default function BookingRow({
   className="cursor-pointer border-b border-zinc-100 transition hover:bg-zinc-50"
 >
 
-      <td className="py-5 font-medium">
+      <td className="px-4 py-5 font-medium text-zinc-900">
         {booking.customer}
       </td>
 
-      <td>
+      <td className="px-4 py-5 text-zinc-600">
         {booking.service}
       </td>
 
-      <td>
+      <td className="px-4 py-5 whitespace-nowrap text-zinc-600">
         {booking.date}
       </td>
 
-      <td>
+      <td className="px-4 py-5 whitespace-nowrap text-zinc-600">
         {booking.time}
       </td>
 
-      <td>
+      <td className="px-4 py-5 whitespace-nowrap text-zinc-600">
         {booking.amount}
       </td>
 
-      <td>
+      <td className="px-4 py-5 whitespace-nowrap">
         <BookingStatusBadge
           status={booking.status}
         />

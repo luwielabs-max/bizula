@@ -6,11 +6,11 @@ export default function BookingTable({
   onSelect,
 }) {
   return (
-    <div className="overflow-hidden rounded-3xl border border-zinc-200 bg-white">
+    <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
 
       <div className="overflow-x-auto">
 
-        <table className="w-full">
+        <table className="min-w-[720px] w-full">
 
           <thead>
 

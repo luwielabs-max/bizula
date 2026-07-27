@@ -1,0 +1,80 @@
+const payments = [
+  {
+    id: 1,
+    customerName: "Michael Johnson",
+    source: "Order",
+    relatedReference: "Order #101",
+    amount: 15000,
+    balance: 5000,
+    commitmentFee: 1500,
+    paymentMethod: "Card",
+    status: "Completed",
+    reference: "PAY-101",
+    date: "2026-07-20",
+    notes: "Order confirmed and paid in full.",
+  },
+  {
+    id: 2,
+    customerName: "Sarah Williams",
+    source: "Booking",
+    relatedReference: "Booking #204",
+    amount: 35000,
+    balance: 35000,
+    commitmentFee: 3500,
+    paymentMethod: "Transfer",
+    status: "Pending",
+    reference: "PAY-204",
+    date: "2026-07-22",
+    notes: "Reservation deposit pending confirmation.",
+  },
+  {
+    id: 3,
+    customerName: "David Brown",
+    source: "Sale",
+    relatedReference: "Sale #301",
+    amount: 50000,
+    balance: 0,
+    commitmentFee: 0,
+    paymentMethod: "Cash",
+    status: "Refunded",
+    reference: "PAY-301",
+    date: "2026-07-18",
+    notes: "Customer refunded after cancellation.",
+  },
+  {
+    id: 4,
+    customerName: "Esther James",
+    source: "Order",
+    relatedReference: "Order #402",
+    amount: 20000,
+    balance: 10000,
+    commitmentFee: 2000,
+    paymentMethod: "Card",
+    status: "Partially Paid",
+    reference: "PAY-402",
+    date: "2026-07-25",
+    notes: "Commitment fee received, remainder due on delivery.",
+  },
+  {
+    id: 5,
+    customerName: "Amina Yusuf",
+    source: "Booking",
+    relatedReference: "Booking #505",
+    amount: 12000,
+    balance: 0,
+    commitmentFee: 1200,
+    paymentMethod: "Cash",
+    status: "Completed",
+    reference: "PAY-505",
+    date: "2026-07-26",
+    notes: "Booking completed and balance settled.",
+  },
+];
+
+export function getPayments() {
+  return [...payments];
+}
+
+export function getPaymentById(id) {
+  return payments.find((payment) => payment.id === id);
+}

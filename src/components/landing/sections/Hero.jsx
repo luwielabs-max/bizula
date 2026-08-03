@@ -1,12 +1,23 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import {
+  useEffect,
+  useState,
+} from "react";
+
+import {
+  AnimatePresence,
+  motion,
+} from "framer-motion";
+
 import {
   ArrowRight,
   Check,
-  Mail,
   LoaderCircle,
+  Mail,
 } from "lucide-react";
-import { Link } from "react-router-dom";
+
+import {
+  Link,
+} from "react-router-dom";
 
 import {
   bizulaIcon,
@@ -19,10 +30,38 @@ const heroPoints = [
   "Pay when business happens",
 ];
 
+const changingWords = [
+  "better than stress.",
+  "better than chaos.",
+  "better than scattered tools.",
+  "built to grow.",
+];
+
 export default function Hero() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState("idle");
-  const [message, setMessage] = useState("");
+
+  const [status, setStatus] =
+    useState("idle");
+
+  const [message, setMessage] =
+    useState("");
+
+  const [wordIndex, setWordIndex] =
+    useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWordIndex((currentIndex) => {
+        return (
+          currentIndex + 1
+        ) % changingWords.length;
+      });
+    }, 2600);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -33,30 +72,37 @@ export default function Hero() {
 
     if (!normalizedEmail) {
       setStatus("error");
+
       setMessage(
         "Enter your email address to join the waitlist."
       );
+
       return;
     }
 
     setStatus("loading");
+
     setMessage("");
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/waitlist",
+        `${import.meta.env.VITE_API_URL}/api/waitlist`,
         {
           method: "POST",
+
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type":
+              "application/json",
           },
+
           body: JSON.stringify({
             email: normalizedEmail,
           }),
         }
       );
 
-      const data = await response.json();
+      const data =
+        await response.json();
 
       if (!response.ok) {
         setStatus("error");
@@ -93,20 +139,41 @@ export default function Hero() {
 
   return (
     <section className="relative isolate overflow-hidden bg-white">
+
       {/* Background atmosphere */}
 
       <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+
         <motion.div
           animate={{
-            x: [0, 55, -35, 0],
-            y: [0, -35, 25, 0],
-            scale: [1, 1.08, 0.96, 1],
+            x: [
+              0,
+              55,
+              -35,
+              0,
+            ],
+
+            y: [
+              0,
+              -35,
+              25,
+              0,
+            ],
+
+            scale: [
+              1,
+              1.08,
+              0.96,
+              1,
+            ],
           }}
+
           transition={{
             duration: 20,
             repeat: Infinity,
             ease: "easeInOut",
           }}
+
           className="
             absolute
             left-1/2
@@ -129,6 +196,7 @@ export default function Hero() {
             [background-size:72px_72px]
           "
         />
+
       </div>
 
       <div
@@ -148,6 +216,7 @@ export default function Hero() {
           lg:pb-28
         "
       >
+
         {/* Brand */}
 
         <motion.div
@@ -155,13 +224,16 @@ export default function Hero() {
             opacity: 0,
             y: -12,
           }}
+
           animate={{
             opacity: 1,
             y: 0,
           }}
+
           transition={{
             duration: 0.5,
           }}
+
           className="
             flex
             w-full
@@ -169,16 +241,19 @@ export default function Hero() {
             justify-center
           "
         >
+
           <img
             src={bizulaLogo}
             alt="Bizula"
             className="h-10 w-auto sm:h-11"
           />
+
         </motion.div>
 
         {/* Main content */}
 
         <div className="flex flex-1 flex-col items-center justify-center pt-16 sm:pt-20 lg:pt-24">
+
           {/* Brand message */}
 
           <motion.div
@@ -186,13 +261,16 @@ export default function Hero() {
               opacity: 0,
               y: 18,
             }}
+
             animate={{
               opacity: 1,
               y: 0,
             }}
+
             transition={{
               duration: 0.5,
             }}
+
             className="
               inline-flex
               items-center
@@ -209,6 +287,7 @@ export default function Hero() {
               shadow-sm
             "
           >
+
             <img
               src={bizulaIcon}
               alt=""
@@ -217,6 +296,7 @@ export default function Hero() {
             />
 
             Built for African businesses
+
           </motion.div>
 
           {/* Heading */}
@@ -226,14 +306,17 @@ export default function Hero() {
               opacity: 0,
               y: 24,
             }}
+
             animate={{
               opacity: 1,
               y: 0,
             }}
+
             transition={{
               delay: 0.1,
               duration: 0.65,
             }}
+
             className="
               mt-8
               max-w-5xl
@@ -247,11 +330,64 @@ export default function Hero() {
               lg:text-8xl
             "
           >
+
             Your business deserves
 
-            <span className="block text-violet-600">
-              better than stress.
+            <span className="block min-h-[1.05em] text-violet-600">
+
+              <AnimatePresence
+                mode="wait"
+              >
+
+                <motion.span
+                  key={
+                    changingWords[
+                      wordIndex
+                    ]
+                  }
+
+                  initial={{
+                    opacity: 0,
+                    y: 28,
+                    filter:
+                      "blur(8px)",
+                  }}
+
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    filter:
+                      "blur(0px)",
+                  }}
+
+                  exit={{
+                    opacity: 0,
+                    y: -28,
+                    filter:
+                      "blur(8px)",
+                  }}
+
+                  transition={{
+                    duration: 0.45,
+                    ease:
+                      "easeOut",
+                  }}
+
+                  className="block"
+                >
+
+                  {
+                    changingWords[
+                      wordIndex
+                    ]
+                  }
+
+                </motion.span>
+
+              </AnimatePresence>
+
             </span>
+
           </motion.h1>
 
           {/* Description */}
@@ -261,14 +397,17 @@ export default function Hero() {
               opacity: 0,
               y: 24,
             }}
+
             animate={{
               opacity: 1,
               y: 0,
             }}
+
             transition={{
               delay: 0.2,
               duration: 0.65,
             }}
+
             className="
               mt-7
               max-w-2xl
@@ -280,9 +419,17 @@ export default function Hero() {
               lg:text-xl
             "
           >
-            Manage products, inventory, orders, bookings,
-            customers, sales, and payments from one simple
-            platform designed for modern African businesses.
+
+            Manage products,
+            inventory,
+            orders,
+            bookings,
+            customers,
+            sales,
+            and payments from one simple
+            platform designed for modern
+            African businesses.
+
           </motion.p>
 
           {/* Waitlist form */}
@@ -292,30 +439,38 @@ export default function Hero() {
               opacity: 0,
               y: 24,
             }}
+
             animate={{
               opacity: 1,
               y: 0,
             }}
+
             transition={{
               delay: 0.3,
               duration: 0.65,
             }}
+
             className="
               mt-10
               w-full
               max-w-2xl
             "
           >
-            {status === "success" ? (
+
+            {status ===
+            "success" ? (
+
               <motion.div
                 initial={{
                   opacity: 0,
                   y: 10,
                 }}
+
                 animate={{
                   opacity: 1,
                   y: 0,
                 }}
+
                 className="
                   rounded-[2rem]
                   border
@@ -326,6 +481,7 @@ export default function Hero() {
                   sm:p-8
                 "
               >
+
                 <div
                   className="
                     mx-auto
@@ -339,10 +495,12 @@ export default function Hero() {
                     text-white
                   "
                 >
+
                   <Check
                     size={27}
                     strokeWidth={3}
                   />
+
                 </div>
 
                 <h3
@@ -354,7 +512,9 @@ export default function Hero() {
                     text-zinc-950
                   "
                 >
+
                   You are on the list!
+
                 </h3>
 
                 <p
@@ -366,13 +526,22 @@ export default function Hero() {
                     text-zinc-500
                   "
                 >
+
                   {message}
+
                 </p>
+
               </motion.div>
+
             ) : (
+
               <>
+
                 <form
-                  onSubmit={handleSubmit}
+                  onSubmit={
+                    handleSubmit
+                  }
+
                   className="
                     flex
                     w-full
@@ -387,6 +556,7 @@ export default function Hero() {
                     sm:flex-row
                   "
                 >
+
                   <div
                     className="
                       flex
@@ -400,8 +570,10 @@ export default function Hero() {
                       py-4
                     "
                   >
+
                     <Mail
                       size={19}
+
                       className="
                         shrink-0
                         text-zinc-400
@@ -410,23 +582,45 @@ export default function Hero() {
 
                     <input
                       type="email"
-                      value={email}
-                      onChange={(event) => {
+
+                      value={
+                        email
+                      }
+
+                      onChange={(
+                        event
+                      ) => {
+
                         setEmail(
-                          event.target.value
+                          event
+                            .target
+                            .value
                         );
 
                         if (
-                          status === "error"
+                          status ===
+                          "error"
                         ) {
-                          setStatus("idle");
-                          setMessage("");
+
+                          setStatus(
+                            "idle"
+                          );
+
+                          setMessage(
+                            ""
+                          );
+
                         }
+
                       }}
+
                       placeholder="Enter your email address"
+
                       disabled={
-                        status === "loading"
+                        status ===
+                        "loading"
                       }
+
                       className="
                         min-w-0
                         flex-1
@@ -438,13 +632,17 @@ export default function Hero() {
                         disabled:cursor-not-allowed
                       "
                     />
+
                   </div>
 
                   <button
                     type="submit"
+
                     disabled={
-                      status === "loading"
+                      status ===
+                      "loading"
                     }
+
                     className="
                       inline-flex
                       min-h-[56px]
@@ -467,39 +665,56 @@ export default function Hero() {
                       sm:min-w-[180px]
                     "
                   >
-                    {status === "loading" ? (
+
+                    {status ===
+                    "loading" ? (
+
                       <>
+
                         <LoaderCircle
                           size={18}
+
                           className="
                             animate-spin
                           "
                         />
 
                         Joining...
+
                       </>
+
                     ) : (
+
                       <>
+
                         Join waitlist
 
                         <ArrowRight
                           size={18}
                         />
+
                       </>
+
                     )}
+
                   </button>
+
                 </form>
 
-                {status === "error" && (
+                {status ===
+                "error" && (
+
                   <motion.p
                     initial={{
                       opacity: 0,
                       y: -5,
                     }}
+
                     animate={{
                       opacity: 1,
                       y: 0,
                     }}
+
                     className="
                       mt-4
                       rounded-xl
@@ -513,8 +728,11 @@ export default function Hero() {
                       text-red-600
                     "
                   >
+
                     {message}
+
                   </motion.p>
+
                 )}
 
                 <p
@@ -525,17 +743,24 @@ export default function Hero() {
                     text-zinc-500
                   "
                 >
-                  Join the waitlist and be among the
-                  first businesses to experience Bizula.
+
+                  Join the waitlist and be among
+                  the first businesses to
+                  experience Bizula.
+
                 </p>
+
               </>
+
             )}
 
             {/* Sign in */}
 
             <div className="mt-5">
+
               <Link
                 to="/login"
+
                 className="
                   inline-flex
                   items-center
@@ -547,6 +772,7 @@ export default function Hero() {
                   hover:text-violet-700
                 "
               >
+
                 Already have an account?
 
                 <span
@@ -555,10 +781,15 @@ export default function Hero() {
                     underline-offset-4
                   "
                 >
+
                   Sign in
+
                 </span>
+
               </Link>
+
             </div>
+
           </motion.div>
 
           {/* Trust points */}
@@ -567,13 +798,16 @@ export default function Hero() {
             initial={{
               opacity: 0,
             }}
+
             animate={{
               opacity: 1,
             }}
+
             transition={{
               delay: 0.45,
               duration: 0.6,
             }}
+
             className="
               mt-7
               flex
@@ -589,36 +823,47 @@ export default function Hero() {
               sm:gap-6
             "
           >
-            {heroPoints.map((point) => (
-              <div
-                key={point}
-                className="
-                  flex
-                  items-center
-                  gap-2
-                "
-              >
-                <span
+
+            {heroPoints.map(
+              (point) => (
+
+                <div
+                  key={point}
+
                   className="
                     flex
-                    h-5
-                    w-5
                     items-center
-                    justify-center
-                    rounded-full
-                    bg-violet-100
-                    text-violet-700
+                    gap-2
                   "
                 >
-                  <Check
-                    size={13}
-                    strokeWidth={3}
-                  />
-                </span>
 
-                {point}
-              </div>
-            ))}
+                  <span
+                    className="
+                      flex
+                      h-5
+                      w-5
+                      items-center
+                      justify-center
+                      rounded-full
+                      bg-violet-100
+                      text-violet-700
+                    "
+                  >
+
+                    <Check
+                      size={13}
+                      strokeWidth={3}
+                    />
+
+                  </span>
+
+                  {point}
+
+                </div>
+
+              )
+            )}
+
           </motion.div>
 
           {/* Product preview */}
@@ -629,16 +874,19 @@ export default function Hero() {
               y: 50,
               scale: 0.97,
             }}
+
             animate={{
               opacity: 1,
               y: 0,
               scale: 1,
             }}
+
             transition={{
               delay: 0.55,
               duration: 0.8,
               ease: "easeOut",
             }}
+
             className="
               relative
               mt-14
@@ -653,6 +901,7 @@ export default function Hero() {
               sm:p-3
             "
           >
+
             <div
               className="
                 overflow-hidden
@@ -664,6 +913,7 @@ export default function Hero() {
                 sm:p-8
               "
             >
+
               <div
                 className="
                   flex
@@ -674,6 +924,7 @@ export default function Hero() {
                   pb-5
                 "
               >
+
                 <div
                   className="
                     flex
@@ -681,10 +932,12 @@ export default function Hero() {
                     gap-3
                   "
                 >
+
                   <img
                     src={bizulaIcon}
                     alt=""
                     aria-hidden="true"
+
                     className="
                       h-10
                       w-10
@@ -692,13 +945,17 @@ export default function Hero() {
                   />
 
                   <div className="text-left">
+
                     <p
                       className="
                         font-bold
                         text-zinc-950
                       "
                     >
-                      Your business, at a glance
+
+                      Your business,
+                      at a glance
+
                     </p>
 
                     <p
@@ -707,9 +964,14 @@ export default function Hero() {
                         text-zinc-500
                       "
                     >
-                      Everything working together
+
+                      Everything working
+                      together
+
                     </p>
+
                   </div>
+
                 </div>
 
                 <span
@@ -725,8 +987,11 @@ export default function Hero() {
                     sm:block
                   "
                 >
+
                   Business active
+
                 </span>
+
               </div>
 
               <div
@@ -737,6 +1002,7 @@ export default function Hero() {
                   sm:grid-cols-3
                 "
               >
+
                 <div
                   className="
                     rounded-2xl
@@ -747,6 +1013,7 @@ export default function Hero() {
                     text-left
                   "
                 >
+
                   <p
                     className="
                       text-sm
@@ -754,7 +1021,9 @@ export default function Hero() {
                       text-zinc-500
                     "
                   >
+
                     Today&apos;s sales
+
                   </p>
 
                   <p
@@ -766,7 +1035,9 @@ export default function Hero() {
                       text-zinc-950
                     "
                   >
+
                     ₦248,000
+
                   </p>
 
                   <p
@@ -777,8 +1048,11 @@ export default function Hero() {
                       text-emerald-600
                     "
                   >
+
                     +18.4% this week
+
                   </p>
+
                 </div>
 
                 <div
@@ -791,6 +1065,7 @@ export default function Hero() {
                     text-left
                   "
                 >
+
                   <p
                     className="
                       text-sm
@@ -798,7 +1073,9 @@ export default function Hero() {
                       text-zinc-500
                     "
                   >
+
                     New orders
+
                   </p>
 
                   <p
@@ -810,7 +1087,9 @@ export default function Hero() {
                       text-zinc-950
                     "
                   >
+
                     24
+
                   </p>
 
                   <p
@@ -821,8 +1100,11 @@ export default function Hero() {
                       text-violet-600
                     "
                   >
+
                     8 awaiting action
+
                   </p>
+
                 </div>
 
                 <div
@@ -835,6 +1117,7 @@ export default function Hero() {
                     text-left
                   "
                 >
+
                   <p
                     className="
                       text-sm
@@ -842,7 +1125,9 @@ export default function Hero() {
                       text-zinc-500
                     "
                   >
+
                     Inventory health
+
                   </p>
 
                   <p
@@ -854,7 +1139,9 @@ export default function Hero() {
                       text-zinc-950
                     "
                   >
+
                     96%
+
                   </p>
 
                   <p
@@ -865,14 +1152,23 @@ export default function Hero() {
                       text-amber-600
                     "
                   >
+
                     3 products running low
+
                   </p>
+
                 </div>
+
               </div>
+
             </div>
+
           </motion.div>
+
         </div>
+
       </div>
+
     </section>
   );
 }

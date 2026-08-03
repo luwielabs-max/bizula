@@ -53,8 +53,8 @@ export default function CTA() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/waitlist",
-        {
+  `${import.meta.env.VITE_API_URL}/api/waitlist`,
+  {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

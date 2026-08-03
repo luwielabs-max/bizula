@@ -22,6 +22,8 @@ import Settings from "../pages/Dashboard/Settings";
 import BookingPage from "../pages/Public/BookingPage";
 import Orders from "../pages/Dashboard/Orders";
 
+import WaitlistAdmin from "./pages/WaitlistAdmin";
+
 export default function AppRoutes() {
   return (
     <BrowserRouter>
@@ -63,6 +65,10 @@ export default function AppRoutes() {
           <Route path="settings" element={<Settings />} />
 
         </Route>
+        <Route
+  path="/admin/waitlist"
+  element={<WaitlistAdmin />}
+/>
 
     <Route path="/b/:slug" element={<BookingPage />} />
       </Routes>

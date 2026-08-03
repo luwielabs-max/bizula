@@ -22,7 +22,7 @@ import Settings from "../pages/Dashboard/Settings";
 import BookingPage from "../pages/Public/BookingPage";
 import Orders from "../pages/Dashboard/Orders";
 
-import WaitlistAdmin from "./pages/WaitlistAdmin";
+import WaitlistAdmin from "../pages/WaitlistAdmin";
 
 export default function AppRoutes() {
   return (

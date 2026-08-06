@@ -1,6 +1,9 @@
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import authRoutes from "./routes/authRoutes.js";
+
+
 //import compression from "compression";
 
 const app = express();
@@ -16,6 +19,7 @@ app.use(express.json());
 
 // Parse Form Data
 app.use(express.urlencoded({ extended: true }));
+app.use("/api/auth", authRoutes);
 
 // Compress responses
 //app.use(compression());

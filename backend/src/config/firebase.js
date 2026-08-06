@@ -1,18 +1,19 @@
-import admin from "firebase-admin";
+import { initializeApp, cert } from "firebase-admin/app";
+import { getAuth } from "firebase-admin/auth";
+import { getFirestore } from "firebase-admin/firestore";
 import { readFileSync } from "fs";
 import { join } from "path";
 
 const serviceAccount = JSON.parse(
   readFileSync(
-    join(process.cwd(), "serviceAccountKey.json"),
+    join(process.cwd(), "bizula-firebase-adminsdk-fbsvc-c4831c9496.json"),
     "utf8"
   )
 );
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+initializeApp({
+  credential: cert(serviceAccount),
 });
 
-export const db = admin.firestore();
-export const auth = admin.auth();
-export default admin;
+export const db = getFirestore();
+export const auth = getAuth();

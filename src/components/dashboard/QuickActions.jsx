@@ -9,21 +9,25 @@ import {
 import retailActions from "../../dashboard/configs/quickActions/retail";
 import serviceActions from "../../dashboard/configs/quickActions/service";
 
-import { currentUser } from "../../services/auth";
+import { auth } from "../../firebase/config";
 
 import QuickActionCard from "./QuickActionCard";
 
 export default function QuickActions() {
   const navigate = useNavigate();
 
-  const actions =
-    currentUser.business.type === "retail"
-      ? retailActions
-      : serviceActions;
-
+  const [user, setUser] = useState(null);
   const [isMobile, setIsMobile] = useState(
     window.innerWidth < 768
   );
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
+      setUser(firebaseUser);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -37,11 +41,17 @@ export default function QuickActions() {
     };
   }, []);
 
+  // Temporary until we fetch the Firestore profile
+  const businessType = "retail";
+
+  const actions =
+    businessType === "retail"
+      ? retailActions
+      : serviceActions;
+
   return (
     <section className="space-y-6">
-
       <div>
-
         <h2 className="text-xl font-semibold tracking-tight">
           Quick Actions
         </h2>
@@ -50,50 +60,38 @@ export default function QuickActions() {
           Frequently used actions for your business.
         </p>
 
+        {user && (
+          <p className="text-xs text-zinc-400 mt-2">
+            Logged in as: {user.email}
+          </p>
+        )}
       </div>
 
       {isMobile ? (
-
         <div className="flex justify-center">
-
           <LDock>
-
             {actions.map((action) => (
-
               <button
                 key={action.title}
                 onClick={() => navigate(action.path)}
                 aria-label={action.title}
                 title={action.title}
               >
-                <LDockItem
-                  icon={action.icon}
-                />
+                <LDockItem icon={action.icon} />
               </button>
-
             ))}
-
           </LDock>
-
         </div>
-
       ) : (
-
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
-
           {actions.map((action) => (
-
             <QuickActionCard
               key={action.title}
               {...action}
             />
-
           ))}
-
         </div>
-
       )}
-
     </section>
   );
 }

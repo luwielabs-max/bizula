@@ -6,6 +6,23 @@ import {
   LButton,
   LInput,
 } from "../../../lib/luwie-ui";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../../../firebase/config";
+
+const provider = new GoogleAuthProvider();
+
+const login = async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
+
+    const token = await result.user.getIdToken();
+
+    console.log("Firebase Token:", token);
+
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 export default function LoginForm({
   form,

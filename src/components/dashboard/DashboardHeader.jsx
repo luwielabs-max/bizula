@@ -1,5 +1,5 @@
 import { Building2 } from "lucide-react";
-import { currentUser } from "../../services/auth";
+
 
 export default function DashboardHeader() {
   const hour = new Date().getHours();

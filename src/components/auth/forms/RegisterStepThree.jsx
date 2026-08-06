@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import {
   Store,
@@ -9,6 +10,8 @@ import {
   LInput,
 } from "../../../lib/luwie-ui";
 
+import { register } from "../../../services/auth/authService";
+
 export default function RegisterStepThree({
   form,
   setForm,
@@ -16,6 +19,32 @@ export default function RegisterStepThree({
   onSubmit,
 }) {
   const isRetail = form.businessType === "retail";
+
+  const [loading, setLoading] = useState(false);
+
+  async function handleRegister() {
+    try {
+      setLoading(true);
+
+      // Register with Firebase and Backend
+      const response = await register(form);
+
+      console.log("Registration Successful:", response);
+
+      // Continue to success page
+      onSubmit();
+
+    } catch (error) {
+      console.error("Registration Error:", error);
+
+      alert(
+        error.message || "Registration failed. Please try again."
+      );
+
+    } finally {
+      setLoading(false);
+    }
+  }
 
   return (
     <motion.div
@@ -32,7 +61,7 @@ export default function RegisterStepThree({
         x: -25,
       }}
       transition={{
-        duration: .35,
+        duration: 0.35,
       }}
       className="space-y-6"
     >
@@ -60,7 +89,6 @@ export default function RegisterStepThree({
         "
       >
         <div className="flex items-center gap-4">
-
           <div
             className="
               w-12
@@ -91,10 +119,10 @@ export default function RegisterStepThree({
               Selected in Step 2
             </p>
           </div>
-
         </div>
 
         <button
+          type="button"
           onClick={onBack}
           className="
             text-sm
@@ -109,10 +137,12 @@ export default function RegisterStepThree({
 
       <LButton
         className="w-full h-14 rounded-2xl"
-        disabled={!form.businessName.trim()}
-        onClick={onSubmit}
+        disabled={!form.businessName.trim() || loading}
+        onClick={handleRegister}
       >
-        Create Account →
+        {loading
+          ? "Creating Account..."
+          : "Create Account →"}
       </LButton>
     </motion.div>
   );

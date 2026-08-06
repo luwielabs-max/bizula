@@ -3,11 +3,11 @@ export default function InventoryTable({
   onSelect,
 }) {
   return (
-    <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white">
+    <div className="overflow-hidden rounded-2xl border border-zinc-200 bg-white shadow-sm">
 
       <div className="overflow-x-auto">
 
-        <table className="min-w-full">
+        <table className="min-w-[760px] w-full">
 
           <thead className="border-b border-zinc-200 bg-zinc-50">
 
@@ -59,27 +59,25 @@ export default function InventoryTable({
                     {product.category}
                   </td>
 
-                  <td className="px-6 py-5">
+                  <td className="px-6 py-5 whitespace-nowrap">
                     {product.stock}
                   </td>
 
-                  <td className="px-6 py-5">
+                  <td className="px-6 py-5 whitespace-nowrap">
                     {product.reservedStock}
                   </td>
 
-                  <td className="px-6 py-5 font-semibold">
+                  <td className="px-6 py-5 whitespace-nowrap font-semibold">
                     {available}
                   </td>
 
-                  <td className="px-6 py-5">
+                  <td className="px-6 py-5 whitespace-nowrap">
                     {product.sellingPrice}
                   </td>
 
-                  <td className="px-6 py-5">
-
+                  <td className="px-6 py-5 whitespace-nowrap">
                     <span
-                      className={`rounded-full px-3 py-1 text-xs font-medium
-                      ${
+                      className={`inline-flex items-center justify-center whitespace-nowrap rounded-full px-3 py-1 text-xs font-medium ${
                         product.status === "In Stock"
                           ? "bg-green-100 text-green-700"
                           : product.status === "Low Stock"
@@ -89,7 +87,6 @@ export default function InventoryTable({
                     >
                       {product.status}
                     </span>
-
                   </td>
 
                 </tr>

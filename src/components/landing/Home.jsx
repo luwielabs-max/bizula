@@ -26,8 +26,6 @@ export default function Home() {
 
         <FAQ />
 
-        <FAQ />
-
         <CTA />
 
         <Footer />

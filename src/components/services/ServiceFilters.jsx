@@ -2,10 +2,10 @@ import { Search } from "lucide-react";
 
 export default function ServiceFilters() {
   return (
-    <div className="rounded-2xl border border-zinc-200 bg-white p-5">
-      <div className="grid gap-4 lg:grid-cols-4">
+    <div className="rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm sm:p-5">
+      <div className="flex flex-wrap gap-3 lg:grid lg:grid-cols-4">
         {/* Search */}
-        <div className="relative lg:col-span-2">
+        <div className="relative min-w-[220px] flex-1 basis-full lg:col-span-2 lg:basis-auto">
           <Search
             size={18}
             className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400"

@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { LCard } from "../../lib/luwie-ui";
+import { LCard } from "../../luwie-ui/src";
+import { formatCurrencyValue, formatCompactNumber } from "../../utils/formatters";
 
 export default function WidgetCard({
   title,

@@ -1,0 +1,104 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 620 180"
+  fill="none"
+  role="img"
+  aria-labelledby="bizulaLogoLightTitle"
+>
+  <title id="bizulaLogoLightTitle">Bizula</title>
+
+  <defs>
+    <linearGradient
+      id="bizulaLogoLightPurple"
+      x1="25"
+      y1="15"
+      x2="155"
+      y2="165"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stop-color="#A78BFA" />
+      <stop offset="1" stop-color="#6D3FE0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Simplified Bizula beaver mark -->
+  <g transform="translate(10 5) scale(0.64)">
+    <!-- Head -->
+    <path
+      d="M61 89C45 69 47 37 70 25C90 15 108 25 116 38C123 34 133 34 140 38C148 25 166 15 186 25C209 37 211 69 195 89C210 106 217 128 213 154C208 191 177 221 128 226C79 221 48 191 43 154C39 128 46 106 61 89Z"
+      fill="url(#bizulaLogoLightPurple)"
+    />
+
+    <!-- Eyes -->
+    <path
+      d="M67 101C67 82 81 69 99 69C117 69 129 82 129 101V139C129 159 115 172 98 172C80 172 67 159 67 139V101Z"
+      fill="#FFFFFF"
+    />
+
+    <path
+      d="M127 101C127 82 139 69 157 69C175 69 189 82 189 101V139C189 159 176 172 158 172C141 172 127 159 127 139V101Z"
+      fill="#FFFFFF"
+    />
+
+    <!-- Pupils -->
+    <path
+      d="M82 103C82 94 89 89 97 89C106 89 112 95 112 104V136C112 146 106 152 97 152C88 152 82 146 82 136V103Z"
+      fill="#18181B"
+    />
+
+    <path
+      d="M144 103C144 94 151 89 159 89C168 89 174 95 174 104V136C174 146 168 152 159 152C150 152 144 146 144 136V103Z"
+      fill="#18181B"
+    />
+
+    <!-- Nose -->
+    <path
+      d="M111 158C111 149 118 143 128 143C138 143 145 149 145 158C145 168 137 176 128 176C119 176 111 168 111 158Z"
+      fill="#18181B"
+    />
+
+    <!-- Muzzle -->
+    <path
+      d="M94 169C94 158 103 151 114 151H142C153 151 162 158 162 169C162 181 153 190 142 190H114C103 190 94 181 94 169Z"
+      fill="#FFD27A"
+    />
+
+    <!-- Tooth -->
+    <path
+      d="M117 187H139L132 210C131 214 125 214 123 210L117 187Z"
+      fill="#FFFFFF"
+    />
+
+    <!-- Cheeks -->
+    <path
+      d="M91 196C91 189 97 185 103 188L111 193C115 196 114 202 110 205L103 211C97 214 91 207 91 201V196Z"
+      fill="#C4B5FD"
+    />
+
+    <path
+      d="M145 193L153 188C159 185 165 189 165 196V201C165 207 159 214 153 211L146 205C142 202 141 196 145 193Z"
+      fill="#C4B5FD"
+    />
+  </g>
+
+  <!-- White wordmark -->
+  <text
+    x="175"
+    y="122"
+    fill="#FFFFFF"
+    font-family="Inter, Arial, sans-serif"
+    font-size="104"
+    font-weight="800"
+    letter-spacing="-5"
+  >
+    bizula
+  </text>
+
+  <!-- White brand dot -->
+  <circle
+    cx="546"
+    cy="108"
+    r="9"
+    fill="#FFFFFF"
+  />
+</svg>

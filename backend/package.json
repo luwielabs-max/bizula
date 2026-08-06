@@ -1,0 +1,25 @@
+{
+  "name": "bizula",
+  "version": "2.0.0",
+  "description": "Bizula Marketplace Backend",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./src/sever.js",
+    "start": "node ./src/sever.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "firebase": "^12.16.0",
+    "firebase-admin": "^14.2.0",
+    "helmet": "^8.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}

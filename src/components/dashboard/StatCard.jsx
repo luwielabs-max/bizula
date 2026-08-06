@@ -1,12 +1,26 @@
 import { motion } from "framer-motion";
-import { LCard } from "../../lib/luwie-ui";
+import { LCard } from "../../luwie-ui/src";
+import { formatCurrencyValue, formatCompactNumber } from "../../utils/formatters";
 
 export default function StatCard({
   icon: Icon,
   title,
   value,
   subtitle,
+  money = false,
 }) {
+  const isNumeric = typeof value === "number" || (!Number.isNaN(Number(value)) && String(value).trim() !== "");
+  const numericValue = typeof value === "number" ? value : Number(value);
+  const displayValue = money
+    ? formatCurrencyValue(numericValue)
+    : isNumeric
+      ? formatCompactNumber(numericValue)
+      : String(value);
+
+  const fullValue = typeof value === "number"
+    ? value.toLocaleString()
+    : String(value ?? "");
+
   return (
     <motion.div
       whileHover={{ y: -4 }}
@@ -16,24 +30,23 @@ export default function StatCard({
         damping: 20,
       }}
     >
-      <LCard className="p-6 h-full">
-        <div className="flex items-start justify-between">
-          <div>
-            <p className="text-sm text-zinc-500">
-              {title}
-            </p>
+      <LCard className="h-full p-5 sm:p-6">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0 flex-1">
+            <p className="text-sm text-zinc-500">{title}</p>
 
-            <h2 className="text-3xl font-semibold mt-3 tracking-tight">
-              {value}
+            <h2
+              className="mt-3 overflow-hidden text-ellipsis whitespace-nowrap text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl"
+              title={fullValue}
+            >
+              {displayValue}
             </h2>
 
-            <p className="text-sm text-zinc-400 mt-2">
-              {subtitle}
-            </p>
+            <p className="mt-2 text-sm text-zinc-400">{subtitle}</p>
           </div>
 
           {Icon && (
-            <div className="w-12 h-12 rounded-2xl bg-zinc-100 flex items-center justify-center">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-zinc-100">
               <Icon size={22} />
             </div>
           )}

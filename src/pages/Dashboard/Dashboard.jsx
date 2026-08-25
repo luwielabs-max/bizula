@@ -5,7 +5,7 @@ import QuickActions from "../../components/dashboard/QuickActions";
 import retailDashboard from "../../dashboard/configs/retailDashboard";
 import serviceDashboard from "../../dashboard/configs/serviceDashboard";
 
-import { currentUser } from "../../services/auth";
+
 
 export default function Dashboard() {
   const businessType = currentUser?.business?.type;

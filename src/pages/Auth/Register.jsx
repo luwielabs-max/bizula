@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import { register } from "../../services/auth/authService";
 import AuthLayout from "../../components/auth/AuthLayout";
 import StepIndicator from "../../components/auth/shared/StepIndicator";
 import AuthHeader from "../../components/auth/shared/AuthHeader";
@@ -83,8 +83,20 @@ const [form, setForm] = useState({
     form={form}
     setForm={setForm}
     onBack={() => setStep(2)}
-onSubmit={() => {
-  navigate("/success");
+onSubmit={async () => {
+  try {
+    await register(form);
+
+    console.log("Registration completed.");
+
+    alert("Registration successful!");
+
+   window.location.href = "/success";
+  } catch (error) {
+    console.error(error);
+
+    alert(error.message);
+  }
 }}
   />
 )}

@@ -6,36 +6,36 @@ import {
   LButton,
   LInput,
 } from "../../../lib/luwie-ui";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { auth } from "../../../firebase/config";
-
-const provider = new GoogleAuthProvider();
-
-const login = async () => {
-  try {
-    const result = await signInWithPopup(auth, provider);
-
-    const token = await result.user.getIdToken();
-
-    console.log("Firebase Token:", token);
-
-  } catch (error) {
-    console.error(error);
-  }
-};
 
 export default function LoginForm({
   form,
   setForm,
   onSubmit,
+  loading = false,
+  error = "",
 }) {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
 
-  return (
-    <div className="space-y-5">
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-      {/* Email */}
+    if (!form.email || !form.password) {
+      return;
+    }
+
+    await onSubmit();
+  };
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-5"
+    >
+
+      {/* ================================
+          EMAIL
+      ================================= */}
 
       <LInput
         type="email"
@@ -47,14 +47,21 @@ export default function LoginForm({
             email: e.target.value,
           })
         }
+        disabled={loading}
       />
 
-      {/* Password */}
+      {/* ================================
+          PASSWORD
+      ================================= */}
 
       <div className="relative">
 
         <LInput
-          type={showPassword ? "text" : "password"}
+          type={
+            showPassword
+              ? "text"
+              : "password"
+          }
           placeholder="Password"
           value={form.password}
           onChange={(e) =>
@@ -63,6 +70,7 @@ export default function LoginForm({
               password: e.target.value,
             })
           }
+          disabled={loading}
         />
 
         <button
@@ -76,8 +84,8 @@ export default function LoginForm({
             top-1/2
             -translate-y-1/2
             text-zinc-500
-            hover:text-black
             transition
+            hover:text-black
           "
         >
           {showPassword ? (
@@ -89,11 +97,23 @@ export default function LoginForm({
 
       </div>
 
-      {/* Remember */}
+      {/* ================================
+          ERROR
+      ================================= */}
+
+      {error && (
+        <p className="text-sm text-red-500">
+          {error}
+        </p>
+      )}
+
+      {/* ================================
+          REMEMBER ME
+      ================================= */}
 
       <div className="flex items-center justify-between">
 
-        <label className="flex items-center gap-2 cursor-pointer">
+        <label className="flex cursor-pointer items-center gap-2">
 
           <input
             type="checkbox"
@@ -102,6 +122,7 @@ export default function LoginForm({
               setRememberMe(!rememberMe)
             }
             className="rounded"
+            disabled={loading}
           />
 
           <span className="text-sm text-zinc-600">
@@ -111,27 +132,36 @@ export default function LoginForm({
         </label>
 
         <Link
-  to="/forgot-password"
-  className="
-    text-sm
-    text-black
-    hover:underline
-  "
->
-  Forgot password?
-</Link>
+          to="/forgot-password"
+          className="
+            text-sm
+            text-black
+            hover:underline
+          "
+        >
+          Forgot password?
+        </Link>
 
       </div>
 
-      {/* Login */}
+      {/* ================================
+          LOGIN BUTTON
+      ================================= */}
 
       <LButton
+        type="submit"
         className="w-full h-12 rounded-xl"
-        onClick={onSubmit}
+        disabled={
+          loading ||
+          !form.email ||
+          !form.password
+        }
       >
-        Sign In
+        {loading
+          ? "Signing in..."
+          : "Sign In"}
       </LButton>
 
-    </div>
+    </form>
   );
 }

@@ -1,28 +1,29 @@
+import {
+  formatCurrencyValue,
+  formatCompactNumber,
+} from "../../utils/formatters";
 
-
-import { formatCurrencyValue, formatCompactNumber } from "../../utils/formatters";
-
-export default function ServiceStats({ services }) {
+export default function ServiceStats({ services = [] }) {
   const totalServices = services.length;
 
   const activeServices = services.filter(
-    (service) => service.status === "Active"
+    (service) =>
+      service.status?.toLowerCase() === "active"
   ).length;
 
   const inactiveServices = services.filter(
-    (service) => service.status === "Inactive"
+    (service) =>
+      service.status?.toLowerCase() === "inactive"
   ).length;
 
-  const totalValue = services.reduce((sum, service) => {
-    return (
-      sum +
-      Number(
-        service.price
-          .replace("₦", "")
-          .replace(/,/g, "")
-      )
-    );
-  }, 0);
+  const totalValue = services.reduce(
+    (sum, service) => {
+      const price = Number(service.price) || 0;
+
+      return sum + price;
+    },
+    0
+  );
 
   const stats = [
     {
@@ -49,12 +50,37 @@ export default function ServiceStats({ services }) {
       {stats.map((stat) => (
         <div
           key={stat.title}
-          className="flex h-full flex-col justify-between rounded-2xl border border-zinc-200 bg-white p-5 shadow-sm sm:p-6"
+          className="
+            flex
+            h-full
+            flex-col
+            justify-between
+            rounded-2xl
+            border
+            border-zinc-200
+            bg-white
+            p-5
+            shadow-sm
+            sm:p-6
+          "
         >
-          <p className="text-sm text-zinc-500">{stat.title}</p>
+          <p className="text-sm text-zinc-500">
+            {stat.title}
+          </p>
 
-          <h2 className="mt-3 text-2xl font-bold tracking-tight text-zinc-900 sm:text-3xl">
-            {stat.isCurrency ? formatCurrencyValue(stat.value) : formatCompactNumber(stat.value)}
+          <h2
+            className="
+              mt-3
+              text-2xl
+              font-bold
+              tracking-tight
+              text-zinc-900
+              sm:text-3xl
+            "
+          >
+            {stat.isCurrency
+              ? formatCurrencyValue(stat.value)
+              : formatCompactNumber(stat.value)}
           </h2>
         </div>
       ))}

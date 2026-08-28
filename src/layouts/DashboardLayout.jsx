@@ -1,21 +1,19 @@
-<<<<<<< HEAD
 import { useEffect, useState } from "react";
-=======
-
-import { useState } from "react";
->>>>>>> ef664cdb6ce857b85ccb30f50e2767c5b714da71
 import { NavLink, Outlet } from "react-router-dom";
+
 import {
   Menu,
   X,
   Bell,
   ChevronDown,
+  Handshake,
 } from "lucide-react";
 
 import { auth } from "../firebase/config";
 import { getSidebar } from "../sidebar";
 
 import LSidebar from "../luwie-ui/src/lib/ui/LSidebar";
+import LNavbar from "../luwie-ui/src/lib/ui/LNavbar";
 import LAvatar from "../luwie-ui/src/lib/ui/LAvatar";
 
 import {
@@ -27,73 +25,52 @@ export default function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [user, setUser] = useState(null);
 
-<<<<<<< HEAD
+  /*
+   * Listen for Firebase authentication state
+   */
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((firebaseUser) => {
-      setUser(firebaseUser);
-    });
+    const unsubscribe = auth.onAuthStateChanged(
+      (firebaseUser) => {
+        setUser(firebaseUser);
+      }
+    );
 
     return () => unsubscribe();
   }, []);
 
-  // Temporary until we load the Firestore profile
-  const businessType = "retail";
+  /*
+   * Temporary business type.
+   *
+   * Later we will load this from the user's
+   * Firestore profile.
+   */
+  const businessType = "service";
 
   const sidebarItems = getSidebar(businessType);
 
-  return (
-    <div className="min-h-screen flex bg-zinc-50">
-      <LSidebar
-        open={sidebarOpen}
-        onClose={() => setSidebarOpen(false)}
-      >
-        {sidebarItems.map((item) => (
-          <NavLink
-            key={item.title}
-            to={item.path}
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-3 rounded-xl transition ${
-                isActive
-                  ? "bg-black text-white"
-                  : "hover:bg-zinc-100"
-              }`
-            }
-          >
-            <item.icon size={20} />
-            <span>{item.title}</span>
-          </NavLink>
-        ))}
-      </LSidebar>
+  /*
+   * User information
+   */
+  const userName =
+    user?.displayName ||
+    user?.email?.split("@")[0] ||
+    "Bizula User";
 
-      <div className="flex-1 flex flex-col">
-        <LNavbar>
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="md:hidden"
-          >
-            <Menu />
-          </button>
+  const userPhoto = user?.photoURL || "";
 
-          <div className="flex items-center gap-3 ml-auto">
-            <Handshake />
-
-            <LAvatar
-              name={user?.displayName || "User"}
-              src={user?.photoURL || ""}
-            />
-=======
-  const sidebarItems = getSidebar(
-    currentUser.business.type
-  );
-
-  const userName = currentUser?.name || "Bizula User";
-  const businessName =
-    currentUser?.business?.name || "Your Business";
+  /*
+   * Temporary business name.
+   *
+   * Later this will come from Firestore.
+   */
+  const businessName = "Your Business";
 
   return (
     <div className="min-h-screen bg-zinc-50">
 
-      {/* Mobile overlay */}
+      {/* =========================================
+          MOBILE SIDEBAR OVERLAY
+      ========================================= */}
 
       {sidebarOpen && (
         <button
@@ -111,7 +88,9 @@ export default function DashboardLayout() {
         />
       )}
 
-      {/* Sidebar */}
+      {/* =========================================
+          SIDEBAR
+      ========================================= */}
 
       <aside
         className={`
@@ -128,6 +107,7 @@ export default function DashboardLayout() {
           transition-transform
           duration-300
           lg:translate-x-0
+
           ${
             sidebarOpen
               ? "translate-x-0"
@@ -138,7 +118,9 @@ export default function DashboardLayout() {
 
         <LSidebar className="flex h-full flex-col p-5">
 
-          {/* Brand */}
+          {/* =====================================
+              BRAND
+          ===================================== */}
 
           <div className="flex items-center justify-between">
 
@@ -146,16 +128,16 @@ export default function DashboardLayout() {
               to="/dashboard"
               onClick={() => setSidebarOpen(false)}
               className="flex items-center"
-              aria-label="Bizula dashboard"
+              aria-label="Bizula Dashboard"
             >
-
               <img
                 src={bizulaLogoDark}
                 alt="Bizula"
                 className="h-9 w-auto"
               />
-
             </NavLink>
+
+            {/* Mobile close button */}
 
             <button
               type="button"
@@ -175,14 +157,14 @@ export default function DashboardLayout() {
                 lg:hidden
               "
             >
-
               <X size={20} />
-
             </button>
 
           </div>
 
-          {/* Business switcher */}
+          {/* =====================================
+              BUSINESS SWITCHER
+          ===================================== */}
 
           <button
             type="button"
@@ -204,6 +186,8 @@ export default function DashboardLayout() {
             "
           >
 
+            {/* Business icon */}
+
             <div
               className="
                 flex
@@ -217,27 +201,23 @@ export default function DashboardLayout() {
                 p-2
               "
             >
-
               <img
                 src={bizulaIcon}
                 alt=""
                 className="h-full w-full"
               />
-
             </div>
+
+            {/* Business information */}
 
             <div className="min-w-0 flex-1">
 
               <p className="truncate text-sm font-semibold text-zinc-950">
-
                 {businessName}
-
               </p>
 
               <p className="mt-0.5 truncate text-xs text-zinc-500">
-
                 Manage your business
-
               </p>
 
             </div>
@@ -249,7 +229,9 @@ export default function DashboardLayout() {
 
           </button>
 
-          {/* Navigation */}
+          {/* =====================================
+              SIDEBAR NAVIGATION
+          ===================================== */}
 
           <nav className="mt-8 flex-1">
 
@@ -264,9 +246,7 @@ export default function DashboardLayout() {
                 text-zinc-400
               "
             >
-
               Workspace
-
             </p>
 
             <div className="space-y-1.5">
@@ -276,7 +256,6 @@ export default function DashboardLayout() {
                 const Icon = item.icon;
 
                 return (
-
                   <NavLink
                     key={item.path}
                     to={item.path}
@@ -295,6 +274,7 @@ export default function DashboardLayout() {
                         font-medium
                         transition-all
                         duration-200
+
                         ${
                           isActive
                             ? `
@@ -319,13 +299,10 @@ export default function DashboardLayout() {
                     />
 
                     <span>
-
-                      {item.label}
-
+                      {item.label || item.title}
                     </span>
 
                   </NavLink>
-
                 );
 
               })}
@@ -334,7 +311,9 @@ export default function DashboardLayout() {
 
           </nav>
 
-          {/* Sidebar footer */}
+          {/* =====================================
+              SIDEBAR FOOTER
+          ===================================== */}
 
           <div
             className="
@@ -348,16 +327,12 @@ export default function DashboardLayout() {
           >
 
             <p className="text-sm font-semibold text-zinc-950">
-
               Bizula is free to start
-
             </p>
 
             <p className="mt-2 text-xs leading-5 text-zinc-500">
-
               You only pay small transaction charges
               when your business earns.
-
             </p>
 
           </div>
@@ -366,13 +341,17 @@ export default function DashboardLayout() {
 
       </aside>
 
-      {/* Main application */}
+      {/* =========================================
+          MAIN APPLICATION
+      ========================================= */}
 
       <div className="min-h-screen lg:pl-[280px]">
 
-        {/* Top navigation */}
+        {/* =======================================
+            TOP NAVIGATION
+        ======================================= */}
 
-        <header
+        <LNavbar
           className="
             sticky
             top-0
@@ -397,9 +376,13 @@ export default function DashboardLayout() {
             "
           >
 
-            {/* Left */}
+            {/* ===================================
+                NAVBAR LEFT
+            =================================== */}
 
             <div className="flex min-w-0 items-center gap-3">
+
+              {/* Mobile menu */}
 
               <button
                 type="button"
@@ -422,32 +405,39 @@ export default function DashboardLayout() {
                   lg:hidden
                 "
               >
-
                 <Menu size={21} />
-
               </button>
+
+              {/* Welcome text */}
 
               <div className="min-w-0">
 
                 <p className="text-xs font-medium text-zinc-500">
-
                   Welcome back
-
                 </p>
 
                 <h1 className="truncate text-base font-semibold text-zinc-950 sm:text-lg">
-
                   {userName}
-
                 </h1>
 
               </div>
 
             </div>
 
-            {/* Right */}
+            {/* ===================================
+                NAVBAR RIGHT
+            =================================== */}
 
             <div className="flex items-center gap-2 sm:gap-3">
+
+              {/* Handshake */}
+
+              <Handshake
+                size={20}
+                className="hidden sm:block"
+              />
+
+              {/* Notifications */}
 
               <button
                 type="button"
@@ -472,6 +462,8 @@ export default function DashboardLayout() {
 
                 <Bell size={19} />
 
+                {/* Notification indicator */}
+
                 <span
                   className="
                     absolute
@@ -488,6 +480,10 @@ export default function DashboardLayout() {
 
               </button>
 
+              {/* =================================
+                  USER PROFILE
+              ================================= */}
+
               <button
                 type="button"
                 className="
@@ -502,22 +498,24 @@ export default function DashboardLayout() {
               >
 
                 <LAvatar
-                  initials="FL"
+                  name={userName}
+                  src={userPhoto}
+                  initials={userName
+                    .slice(0, 2)
+                    .toUpperCase()}
                   size="md"
                 />
+
+                {/* User details */}
 
                 <div className="hidden text-left sm:block">
 
                   <p className="max-w-[130px] truncate text-sm font-semibold text-zinc-900">
-
                     {userName}
-
                   </p>
 
                   <p className="text-xs text-zinc-500">
-
                     Business owner
-
                   </p>
 
                 </div>
@@ -531,12 +529,13 @@ export default function DashboardLayout() {
 
             </div>
 
->>>>>>> ef664cdb6ce857b85ccb30f50e2767c5b714da71
           </div>
 
-        </header>
+        </LNavbar>
 
-        {/* Page content */}
+        {/* =========================================
+            PAGE CONTENT
+        ========================================= */}
 
         <main
           className="
@@ -547,14 +546,7 @@ export default function DashboardLayout() {
             lg:p-8
           "
         >
-
           <Outlet />
-
-<<<<<<< HEAD
-        <main className="flex-1 p-6">
-          <Outlet />
-=======
->>>>>>> ef664cdb6ce857b85ccb30f50e2767c5b714da71
         </main>
 
       </div>

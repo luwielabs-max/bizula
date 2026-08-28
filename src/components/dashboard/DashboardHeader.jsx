@@ -1,7 +1,6 @@
 import { Building2 } from "lucide-react";
 
-
-export default function DashboardHeader() {
+export default function DashboardHeader({ profile }) {
   const hour = new Date().getHours();
 
   let greeting = "Good Morning";
@@ -14,27 +13,48 @@ export default function DashboardHeader() {
     greeting = "Good Evening";
   }
 
+  const userName = profile?.name || "there";
+
+  const businessName =
+    profile?.business?.name || "Your Business";
+
   return (
     <div className="mb-10">
+
       <p className="text-sm text-zinc-500">
-        {greeting}
+        {greeting}, {userName}
       </p>
 
-      <div className="flex items-center gap-3 mt-2">
-        <div className="w-12 h-12 rounded-2xl bg-zinc-100 flex items-center justify-center">
+      <div className="mt-2 flex items-center gap-3">
+
+        <div
+          className="
+            flex
+            h-12
+            w-12
+            items-center
+            justify-center
+            rounded-2xl
+            bg-zinc-100
+          "
+        >
           <Building2 size={22} />
         </div>
 
         <div>
+
           <h1 className="text-3xl font-bold tracking-tight">
-            {currentUser.business.name}
+            {businessName}
           </h1>
 
-          <p className="text-zinc-500 mt-1">
+          <p className="mt-1 text-zinc-500">
             Manage your business from one place.
           </p>
+
         </div>
+
       </div>
+
     </div>
   );
 }

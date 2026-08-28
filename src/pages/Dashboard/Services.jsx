@@ -17,60 +17,176 @@ import EditServiceDrawer from "../../components/services/EditServiceDrawer";
 export default function Services() {
   const [services, setServices] = useState([]);
   const [selectedService, setSelectedService] = useState(null);
+
   const [isCreateOpen, setIsCreateOpen] = useState(false);
 
+  const [loading, setLoading] = useState(true);
+
+  // ==========================================
+  // LOAD SERVICES
+  // ==========================================
+
+  const loadServices = async () => {
+    try {
+      setLoading(true);
+
+      const data = await getServices();
+
+      setServices(data);
+
+    } catch (error) {
+      console.error(
+        "Error loading services:",
+        error
+      );
+
+      alert(error.message);
+
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  // ==========================================
+  // INITIAL LOAD
+  // ==========================================
+
   useEffect(() => {
-    setServices(getServices());
+    loadServices();
   }, []);
 
-  const refreshServices = () => {
-    setServices(getServices());
+
+  // ==========================================
+  // CREATE SERVICE
+  // ==========================================
+
+  const handleCreateService = async (service) => {
+    try {
+      await createService(service);
+
+      await loadServices();
+
+      setIsCreateOpen(false);
+
+    } catch (error) {
+      console.error(
+        "Error creating service:",
+        error
+      );
+
+      alert(error.message);
+    }
   };
 
-  const handleCreateService = (service) => {
-    createService(service);
-    refreshServices();
-    setIsCreateOpen(false);
+
+  // ==========================================
+  // UPDATE SERVICE
+  // ==========================================
+
+  const handleUpdateService = async (
+    id,
+    updatedService
+  ) => {
+    try {
+      await updateService(
+        id,
+        updatedService
+      );
+
+      await loadServices();
+
+      setSelectedService(null);
+
+    } catch (error) {
+      console.error(
+        "Error updating service:",
+        error
+      );
+
+      alert(error.message);
+    }
   };
 
-  const handleUpdateService = (id, updatedService) => {
-    updateService(id, updatedService);
-    refreshServices();
-    setSelectedService(null);
+
+  // ==========================================
+  // DELETE SERVICE
+  // ==========================================
+
+  const handleDeleteService = async (id) => {
+    try {
+      await deleteService(id);
+
+      await loadServices();
+
+      setSelectedService(null);
+
+    } catch (error) {
+      console.error(
+        "Error deleting service:",
+        error
+      );
+
+      alert(error.message);
+    }
   };
 
-  const handleDeleteService = (id) => {
-    deleteService(id);
-    refreshServices();
-    setSelectedService(null);
-  };
 
   return (
     <div className="space-y-10">
 
       <ServiceHeader
-        onCreateService={() => setIsCreateOpen(true)}
+        onCreateService={() =>
+          setIsCreateOpen(true)
+        }
       />
 
-      <ServiceStats services={services} />
 
-      <ServiceFilters />
+      {loading ? (
 
-      <ServiceTable
-        services={services}
-        onSelect={setSelectedService}
-      />
+        <div className="rounded-2xl border border-zinc-200 bg-white p-8 text-center">
+          <p className="text-zinc-500">
+            Loading services...
+          </p>
+        </div>
+
+      ) : (
+
+        <>
+
+          <ServiceStats
+            services={services}
+          />
+
+
+          <ServiceFilters />
+
+
+          <ServiceTable
+            services={services}
+            onSelect={setSelectedService}
+          />
+
+        </>
+
+      )}
+
 
       <CreateServiceDrawer
         open={isCreateOpen}
-        onClose={() => setIsCreateOpen(false)}
+        onClose={() =>
+          setIsCreateOpen(false)
+        }
         onCreate={handleCreateService}
       />
+
 
       <EditServiceDrawer
         open={!!selectedService}
         service={selectedService}
-        onClose={() => setSelectedService(null)}
+        onClose={() =>
+          setSelectedService(null)
+        }
         onUpdate={handleUpdateService}
         onDelete={handleDeleteService}
       />

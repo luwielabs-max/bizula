@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import ProtectedRoute from "../components/auth/protectedRoutes";
 import Home from "../components/landing/Home";
 
 import Login from "../pages/Auth/Login";
@@ -43,28 +43,59 @@ export default function AppRoutes() {
           element={<VerifyEmail />}
         />
 
-        {/* Dashboard */}
-        <Route path="/dashboard" element={<DashboardLayout />}>
+{/* Dashboard */}
 
-          <Route index element={<Dashboard />} />
+<Route element={<ProtectedRoute />}>
 
-          <Route path="bookings" element={<Bookings />} />
+  <Route
+    path="/dashboard"
+    element={<DashboardLayout />}
+  >
 
-          <Route path="services" element={<Services />} />
+    <Route
+      index
+      element={<Dashboard />}
+    />
 
-          <Route path="inventory" element={<Inventory />} />
+    <Route
+      path="bookings"
+      element={<Bookings />}
+    />
 
-          <Route path="sales" element={<Sales />} />
+    <Route
+      path="services"
+      element={<Services />}
+    />
 
-          <Route path="orders" element={<Orders />} />
+    <Route
+      path="inventory"
+      element={<Inventory />}
+    />
 
-          <Route path="customers" element={<Customers />} />
+    <Route
+      path="sales"
+      element={<Sales />}
+    />
 
-          <Route path="payments" element={<Payments />} />
+    <Route
+      path="customers"
+      element={<Customers />}
+    />
 
-          <Route path="settings" element={<Settings />} />
+    <Route
+      path="payments"
+      element={<Payments />}
+    />
 
-        </Route>
+    <Route
+      path="settings"
+      element={<Settings />}
+    />
+
+  </Route>
+
+</Route>
+
         <Route
   path="/admin/waitlist"
   element={<WaitlistAdmin />}

@@ -1,7 +1,5 @@
 import express from "express";
 
-import { verifyIdToken } from "../middleware/auth.js";
-
 import {
   getBookings,
   createBooking,
@@ -9,30 +7,21 @@ import {
   deleteBooking,
 } from "../controllers/bookingControllers.js";
 
+import { verifyIdToken } from "../middleware/auth.js";
+
 const router = express.Router();
 
-router.get(
-  "/",
-  verifyIdToken,
-  getBookings
-);
 
-router.post(
-  "/",
-  verifyIdToken,
-  createBooking
-);
+// Customer creates booking
+router.post("/", createBooking);
 
-router.put(
-  "/:id",
-  verifyIdToken,
-  updateBooking
-);
 
-router.delete(
-  "/:id",
-  verifyIdToken,
-  deleteBooking
-);
+// Vendor manages bookings
+router.get("/", verifyIdToken, getBookings);
+
+router.put("/:id", verifyIdToken, updateBooking);
+
+router.delete("/:id", verifyIdToken, deleteBooking);
+
 
 export default router;

@@ -1,3 +1,4 @@
+
 import { db } from "../config/firebase.js";
 
 // ==========================================
@@ -37,47 +38,115 @@ export const getBookings = async (req, res) => {
 // ==========================================
 // CREATE BOOKING
 // ==========================================
+//
+// This endpoint is used by customers from
+// the public booking page.
+//
+// Customer does NOT need to be logged in.
+//
+// ==========================================
 
 export const createBooking = async (req, res) => {
   try {
-    const { uid } = req.user;
-
     const {
-      customer,
-      service,
+      vendorId,
+      serviceId,
+      serviceName,
+      customerName,
+      customerEmail,
+      customerPhone,
       date,
       time,
+      notes,
       amount,
-      status,
+      reservationFee,
     } = req.body;
 
-    if (!customer || !service || !date || !time) {
+
+    // ========================================
+    // VALIDATION
+    // ========================================
+
+    if (
+      !vendorId ||
+      !serviceId ||
+      !customerName ||
+      !customerEmail ||
+      !customerPhone ||
+      !date ||
+      !time
+    ) {
       return res.status(400).json({
         success: false,
         message:
-          "Customer, service, date and time are required",
+          "Vendor, service, customer details, date and time are required",
       });
     }
 
-    const booking = {
-      vendorId: uid,
 
-      customer,
-      service,
+    // ========================================
+    // VERIFY VENDOR EXISTS
+    // ========================================
+
+    const vendorRef = db
+      .collection("users")
+      .doc(vendorId);
+
+    const vendorDoc = await vendorRef.get();
+
+    if (!vendorDoc.exists) {
+      return res.status(404).json({
+        success: false,
+        message: "Business not found",
+      });
+    }
+
+
+    // ========================================
+    // CREATE BOOKING
+    // ========================================
+
+    const booking = {
+      vendorId,
+
+      serviceId,
+      serviceName: serviceName || "",
+
+      customerName,
+      customerEmail,
+      customerPhone,
+
       date,
       time,
 
+      notes: notes || "",
+
       amount: Number(amount) || 0,
 
-      status: status || "pending",
+      reservationFee:
+        Number(reservationFee) || 0,
+
+      status: "pending",
+
+      paymentStatus: "unpaid",
 
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
+
+    // ========================================
+    // SAVE TO FIRESTORE
+    // ========================================
+
     const bookingRef = await db
       .collection("bookings")
       .add(booking);
+
+
+    // ========================================
+    // RESPONSE
+    // ========================================
 
     return res.status(201).json({
       success: true,
@@ -90,7 +159,10 @@ export const createBooking = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("Create booking error:", error);
+    console.error(
+      "Create booking error:",
+      error
+    );
 
     return res.status(500).json({
       success: false,
@@ -124,8 +196,10 @@ export const updateBooking = async (req, res) => {
 
     const booking = bookingDoc.data();
 
-    // Make sure this booking belongs
-    // to the logged-in vendor
+
+    // ========================================
+    // OWNERSHIP CHECK
+    // ========================================
 
     if (booking.vendorId !== uid) {
       return res.status(403).json({
@@ -134,24 +208,38 @@ export const updateBooking = async (req, res) => {
       });
     }
 
+
     const {
-      customer,
-      service,
+      customerName,
+      customerEmail,
+      customerPhone,
+      serviceName,
       date,
       time,
+      notes,
       amount,
+      reservationFee,
       status,
+      paymentStatus,
     } = req.body;
+
 
     const updates = {
       updatedAt: new Date().toISOString(),
     };
 
-    if (customer !== undefined)
-      updates.customer = customer;
 
-    if (service !== undefined)
-      updates.service = service;
+    if (customerName !== undefined)
+      updates.customerName = customerName;
+
+    if (customerEmail !== undefined)
+      updates.customerEmail = customerEmail;
+
+    if (customerPhone !== undefined)
+      updates.customerPhone = customerPhone;
+
+    if (serviceName !== undefined)
+      updates.serviceName = serviceName;
 
     if (date !== undefined)
       updates.date = date;
@@ -159,13 +247,25 @@ export const updateBooking = async (req, res) => {
     if (time !== undefined)
       updates.time = time;
 
+    if (notes !== undefined)
+      updates.notes = notes;
+
     if (amount !== undefined)
       updates.amount = Number(amount) || 0;
+
+    if (reservationFee !== undefined)
+      updates.reservationFee =
+        Number(reservationFee) || 0;
 
     if (status !== undefined)
       updates.status = status;
 
+    if (paymentStatus !== undefined)
+      updates.paymentStatus = paymentStatus;
+
+
     await bookingRef.update(updates);
+
 
     return res.status(200).json({
       success: true,
@@ -173,7 +273,10 @@ export const updateBooking = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("Update booking error:", error);
+    console.error(
+      "Update booking error:",
+      error
+    );
 
     return res.status(500).json({
       success: false,
@@ -207,7 +310,10 @@ export const deleteBooking = async (req, res) => {
 
     const booking = bookingDoc.data();
 
-    // Ownership check
+
+    // ========================================
+    // OWNERSHIP CHECK
+    // ========================================
 
     if (booking.vendorId !== uid) {
       return res.status(403).json({
@@ -216,7 +322,9 @@ export const deleteBooking = async (req, res) => {
       });
     }
 
+
     await bookingRef.delete();
+
 
     return res.status(200).json({
       success: true,
@@ -224,7 +332,10 @@ export const deleteBooking = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("Delete booking error:", error);
+    console.error(
+      "Delete booking error:",
+      error
+    );
 
     return res.status(500).json({
       success: false,
@@ -232,3 +343,4 @@ export const deleteBooking = async (req, res) => {
     });
   }
 };
+

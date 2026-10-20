@@ -1,140 +1,110 @@
+
 import { auth } from "../../firebase/config";
 
-const API_URL = "http://localhost:5000/api/bookings";
+const API_BASE_URL = (
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.DEV ? "http://localhost:5000" : "")
+).replace(/\/+$/, "");
 
-// ==========================================
-// GET FIREBASE TOKEN
-// ==========================================
+const BOOKINGS_URL = `${API_BASE_URL}/api/bookings`;
 
 const getToken = async () => {
   const user = auth.currentUser;
 
   if (!user) {
-    throw new Error("User is not logged in");
+    throw new Error("Please log in to continue.");
   }
 
-  return await user.getIdToken();
+  return user.getIdToken();
 };
 
+const request = async (endpoint = "", options = {}) => {
+  if (!API_BASE_URL) {
+    throw new Error(
+      "The API URL is not configured. Please contact support."
+    );
+  }
 
-// ==========================================
-// GET ALL BOOKINGS
-// ==========================================
-
-export const getBookings = async () => {
   const token = await getToken();
 
-  const response = await fetch(API_URL, {
-    method: "GET",
+  let response;
 
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  try {
+    response = await fetch(`${BOOKINGS_URL}${endpoint}`, {
+      ...options,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        ...(options.body
+          ? { "Content-Type": "application/json" }
+          : {}),
+        ...options.headers,
+      },
+    });
+  } catch {
+    throw new Error(
+      "Unable to connect to Bizula. Check your connection and try again."
+    );
+  }
 
-  const data = await response.json();
+  let data = null;
+
+  try {
+    data = await response.json();
+  } catch {
+    // Some successful responses, such as DELETE, may have no JSON body.
+  }
 
   if (!response.ok) {
     throw new Error(
-      data.message || "Failed to load bookings"
+      data?.message ||
+        data?.error ||
+        `Request failed (${response.status}). Please try again.`
     );
   }
 
   return data;
 };
 
+// Get all bookings
+export const getBookings = async () => {
+  return request();
+};
 
-// ==========================================
-// CREATE BOOKING
-// ==========================================
-
+// Create a booking
 export const createBooking = async (booking) => {
-  const token = await getToken();
+  if (!booking || typeof booking !== "object") {
+    throw new Error("Valid booking details are required.");
+  }
 
-  const response = await fetch(API_URL, {
+  return request("", {
     method: "POST",
-
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-
     body: JSON.stringify(booking),
   });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(
-      data.message || "Failed to create booking"
-    );
-  }
-
-  return data;
 };
 
-
-// ==========================================
-// UPDATE BOOKING
-// ==========================================
-
-export const updateBooking = async (
-  id,
-  booking
-) => {
-  const token = await getToken();
-
-  const response = await fetch(
-    `${API_URL}/${id}`,
-    {
-      method: "PUT",
-
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify(booking),
-    }
-  );
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(
-      data.message || "Failed to update booking"
-    );
+// Update a booking
+export const updateBooking = async (id, booking) => {
+  if (!id) {
+    throw new Error("A booking ID is required.");
   }
 
-  return data;
+  if (!booking || typeof booking !== "object") {
+    throw new Error("Valid booking details are required.");
+  }
+
+  return request(`/${encodeURIComponent(id)}`, {
+    method: "PUT",
+    body: JSON.stringify(booking),
+  });
 };
 
-
-// ==========================================
-// DELETE BOOKING
-// ==========================================
-
+// Delete a booking
 export const deleteBooking = async (id) => {
-  const token = await getToken();
-
-  const response = await fetch(
-    `${API_URL}/${id}`,
-    {
-      method: "DELETE",
-
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(
-      data.message || "Failed to delete booking"
-    );
+  if (!id) {
+    throw new Error("A booking ID is required.");
   }
 
-  return data;
+  return request(`/${encodeURIComponent(id)}`, {
+    method: "DELETE",
+  });
 };
